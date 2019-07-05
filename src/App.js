@@ -11,7 +11,7 @@ class App extends Component {
   }
 
   urls = {
-    Pedro: 'https://chat-app-coderhook-server.herokuapp.com',
+    Pedro: 'http://localhost:5000',
     Mario: 'https://live-chat-appi.herokuapp.com',
     Andrew: 'https://mighty-mesa-76259.herokuapp.com',
     Jelle: 'https://damp-plains-53364.herokuapp.com'
@@ -57,15 +57,26 @@ class App extends Component {
     this.source.onmessage = this.props.onEvent
   }
 
+  renderText (message) {
+    console.log("message test:", message)
+    const text = typeof message === "string"
+      ? message
+      : message.message
+    
+    console.log("text test:", text)
+
+    return text
+  }
+
   render() {
     const messages = this
-              .props
-              .messages
-              .map((message, index) => <p key={index} >
-              { message } 
-            </p>)
+      .props
+      .messages
+      .map((message, index) => <p key={index} >
+        { this.renderText(message) } 
+      </p>)
 
-            const users = (Object.keys(this.urls))
+    const users = (Object.keys(this.urls))
 
     return <main>
 
