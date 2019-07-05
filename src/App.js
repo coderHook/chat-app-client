@@ -11,9 +11,10 @@ class App extends Component {
   }
 
   urls = {
-    pedro: 'https://chat-app-coderhook-server.herokuapp.com',
-    mario: 'https://live-chat-appi.herokuapp.com',
-    Andrew: 'https://mighty-mesa-76259.herokuapp.com'
+    Pedro: 'https://chat-app-coderhook-server.herokuapp.com',
+    Mario: 'https://live-chat-appi.herokuapp.com',
+    Andrew: 'https://mighty-mesa-76259.herokuapp.com',
+    Jelle: 'https://damp-plains-53364.herokuapp.com'
   }
 
   source = new EventSource(`${this.urls[this.state.user]}/stream`)
