@@ -6,12 +6,17 @@ import {onEvent} from './actions/messages'
 class App extends Component {
   state = {
     messages: [],
-    message: ''
+    message: '',
+    user: 'pedro'
   }
 
-  url = 'https://chat-app-coderhook-server.herokuapp.com'
+  urls = {
+    pedro: 'https://chat-app-coderhook-server.herokuapp.com',
+    mario: 'https://live-chat-appi.herokuapp.com',
+    Andrew: 'https://mighty-mesa-76259.herokuapp.com'
+  }
 
-  source = new EventSource(`${this.url}/stream`)
+  source = new EventSource(`${this.urls[this.state.user]}/stream`)
 
   componentDidMount() {
     this.source.onmessage = this.props.onEvent
@@ -32,12 +37,23 @@ class App extends Component {
     const { message } = this.state
 
     request
-      .post(`${this.url}/message`)
+      .post(`${this.urls[this.state.user]}/message`)
       .send({message})
       .then(response => {
         console.log('res ext: ', response)
       })
       .catch(console.error)
+  }
+
+  changeUser = (user) => {
+    console.log('user!:', user)
+    this.setState({ user })
+
+    const url = `${this.urls[user]}/stream`
+    console.log("url test:", url)
+    this.source = new EventSource(url)
+
+    this.source.onmessage = this.props.onEvent
   }
 
   render() {
@@ -48,11 +64,19 @@ class App extends Component {
               { message } 
             </p>)
 
+            const users = (Object.keys(this.urls))
+
     return <main>
+
+      <div>
+        to whom: { users.map((user, i) => <button key={i} onClick={() => this.changeUser(user)}>{ user }</button>)}
+        </div>
+
       <form onSubmit={this.onSubmit}>
         <input type="text" onChange={ this.onChange } value={this.state.message}/>
         <button>Send</button>
       </form>
+      <h1>Messages: {this.state.user}</h1>
       {messages}
     </main>
   }
