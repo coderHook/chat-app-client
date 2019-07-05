@@ -7,7 +7,7 @@ class App extends Component {
   state = {
     messages: [],
     message: '',
-    user: 'pedro'
+    user: 'Pedro'
   }
 
   urls = {
