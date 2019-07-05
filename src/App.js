@@ -9,7 +9,9 @@ class App extends Component {
     message: ''
   }
 
-  source = new EventSource('http://localhost:5000/stream')
+  url = 'https://chat-app-coderhook-server.herokuapp.com'
+
+  source = new EventSource(`${this.url}/stream`)
 
   componentDidMount() {
     this.source.onmessage = this.props.onEvent
@@ -30,7 +32,7 @@ class App extends Component {
     const { message } = this.state
 
     request
-      .post('http://localhost:5000/message')
+      .post(`${this.url}/message`)
       .send({message})
       .then(response => {
         console.log('res ext: ', response)
